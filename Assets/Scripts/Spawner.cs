@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -6,8 +5,6 @@ using UnityEngine.Pool;
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IColorable
 {
     [SerializeField] private T _object;
-/*  [SerializeField] private TMP_Text _textObjectCreate;
-    [SerializeField] private TMP_Text _textObjectActive;*/
 
     private ObjectPool<T> _pool;
 
