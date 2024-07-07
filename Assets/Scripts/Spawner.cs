@@ -1,18 +1,21 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
-using UnityEngine.UIElements;
 
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IColorable
 {
     [SerializeField] private T _object;
-    [SerializeField] private TMP_Text _textObjectCreate;
-    [SerializeField] private TMP_Text _textObjectActive;
+/*  [SerializeField] private TMP_Text _textObjectCreate;
+    [SerializeField] private TMP_Text _textObjectActive;*/
 
     private ObjectPool<T> _pool;
 
     private int _countObjectCreate;
     private int _countObjectActive;
+
+    public event UnityAction<int, string> OnCreated;
+    public event UnityAction<int, string> OnActiveted;
 
     private void Awake()
     {
@@ -33,7 +36,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IColor
         T obj = Instantiate(_object);
         InitializeObject(obj, Vector3.zero);
         _countObjectCreate++;
-        _textObjectCreate.text = _countObjectCreate.ToString($"Количество созданных {GetObjectName()}: {_countObjectCreate}");
+        OnCreated?.Invoke(_countObjectCreate, GetObjectName());
         return obj;
     }
 
@@ -41,13 +44,13 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IColor
     {
         _pool.Release(obj);
         _countObjectActive--;
-        _textObjectActive.text = _countObjectActive.ToString($"Количество активных  {GetObjectName()}: {_countObjectActive}");
+        OnActiveted?.Invoke(_countObjectActive, GetObjectName());
     }
 
     public T GetObject()
     {
         _countObjectActive++;
-        _textObjectActive.text = _countObjectActive.ToString($"Количество активных {GetObjectName()}: {_countObjectActive}");
+        OnActiveted?.Invoke(_countObjectActive, GetObjectName());
         return _pool.Get();
     }
 

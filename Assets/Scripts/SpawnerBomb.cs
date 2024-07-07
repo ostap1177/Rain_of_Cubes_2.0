@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.Pool;
-using TMPro;
-using UnityEngine.UI;
 
 public class SpawnerBomb : Spawner<Bomb>
 {
+    [SerializeField] private string _name = "Бомб";
     [SerializeField] private Bomb _bomb;
     [SerializeField] private SpawnerCube _spawnerCube;
 
@@ -28,14 +26,13 @@ public class SpawnerBomb : Spawner<Bomb>
     public override void ReceiveObject(Bomb bomb)
     {
         bomb.gameObject.SetActive(true);
-        bomb.Initialize(this, Vector3.zero);
         bomb.Setup();
         bomb.SetStartColor();
     }
 
     protected override string GetObjectName()
     {
-        return "Бомб";
+        return _name;
     }
 
     protected override void InitializeObject(Bomb obj, Vector3 position)

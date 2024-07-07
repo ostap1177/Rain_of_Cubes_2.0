@@ -1,16 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Pool;
-using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 public class SpawnerCube : Spawner<Cube>
 {
+
+    [SerializeField] private string _name = "Кубов";
     [SerializeField] private Cube _cube;
     [SerializeField] private float _delay;
     [SerializeField] private Transform[] _spawnPoints;
@@ -41,13 +37,12 @@ public class SpawnerCube : Spawner<Cube>
 
     protected override string GetObjectName()
     {
-        return "Кубов";
+        return _name;
     }
 
     protected override void InitializeObject(Cube obj, Vector3 position)
     {
         obj.Initialize(this, Vector3.zero);
-
     }
 
     private IEnumerator ExtractingElement()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -25,7 +23,7 @@ public class Cube : MonoBehaviour, IColorable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_colorChanged && !_countdownStarted)
+        if (_colorChanged == false && _countdownStarted == false)
         {
             SetColor();
             StartCountdown();
